@@ -1,0 +1,18 @@
+.button-comp {
+    background: var(--color-magenta-base);
+    border: none;
+    border-radius: var(--radius-base);
+    color: var(--color-white);
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    margin: 0px 5px;
+    padding: 10px 30px;
+}
+
+.button-comp:hover {
+    cursor: pointer;
+}
+
+.button-comp:active {
+    transform: scale(0.98);
+}

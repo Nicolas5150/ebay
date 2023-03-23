@@ -1,0 +1,27 @@
+<if(state.data.length > 0)>
+    <ul.list-comp  on-click("setActivePos", null)>
+        <for|item, index| of=state.data>
+            <li 
+            tabindex=0 
+            class=state.activePos === index ? 'active' : null 
+            key="items[]" 
+            on-click("setActivePos", index) 
+            on-keypress("setActivePos", index)>
+                <div.title>${item.title}</div>
+                <img src=item.images.downsized_medium.url>
+                <if(item.source)>
+                    <a.source 
+                        href=item.source 
+                        target="_blank" 
+                        on-click("newTab", item.source) 
+                        on-keypress("newTab", item.source)>
+                        Source
+                    </a>
+                </if>
+            </li>
+        </for>
+    </ul>
+</if>
+<else>
+    <div>No items were found</div>
+</else>

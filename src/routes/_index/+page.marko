@@ -1,37 +1,82 @@
-import logo from './logo.svg';
+import fetchAndReturn from "../../utils/fetchAndReturn";
 
-<mouse-mask.container>
-  <header>
-    <img.logo src=logo alt="Marko"/>
-  </header>
-  <main>
-    <p>Edit <code>./src/routes/_index/+page.marko</code> and save to reload.</p>
-    <a href="https://markojs.com/docs/getting-started">
-      Learn Marko
-    </a>
-  </main>
-</mouse-mask>
+// https://developers.giphy.com/explorer/
+static const APIKEY = "WY5DTHC1twWZEUuyxQRl47GRH6mChzXd";
+
+class {
+  onCreate() {
+    this.state = {
+      inputVal: "",
+      giphyURL: "https://api.giphy.com/v1/gifs/search",
+      data: false,
+    };
+  }
+
+  async buttonClick(event) {
+    const createFinalURL = () => {
+      const finalUrl = new URL(this.state.giphyURL);
+      finalUrl.searchParams.set("api_key", APIKEY);
+      finalUrl.searchParams.set("q", this.state.inputVal);
+      finalUrl.searchParams.set("limit", "10");
+      finalUrl.searchParams.set("rating", "g");
+      finalUrl.searchParams.set("lang", "en");
+      return finalUrl;
+    };
+
+    const data = await fetchAndReturn(createFinalURL());
+    this.state.data = data.data;
+  }
+
+  inputChange(obj) {
+    this.state.inputVal = obj.value;
+  }
+}
+<div.search-bar-outer>
+  <div.search-bar-inner>
+    <input-comp
+        type="search"
+        id="giphy-searchbar"
+        hidden=true
+        labelText="Giphy search"
+        placeholder="Search"
+        value=state.inputVal
+        on-input-change("inputChange")
+      />
+      <button-comp text="search" on-button-click("buttonClick")/>
+  </div>
+</div>
+
+<if(state.data === null)>
+  <div>Error with search</div>
+</if>
+<else-if(state.data)>
+  <list-comp data=state.data/>
+</else-if>
 
 style {
-  .async-thing {
-    position: absolute;
+  .search-bar-outer {
+    background: white;
+    box-shadow: 1px 1px 3px var(--color-gray-med);
+    display: flex;
+    flex-grow: 1;
+    padding: var( --spacing-size-base) 0px;
+    position: sticky;
+    transition: width .5s linear;
     top: 0;
-    left: 0;
-    color: red;
+    width: 100%;
+    z-index: 3;
   }
 
-  .container {
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size:2em; 
-    color: #fff;
-    background: #111;
-    height:100%;
-    width:100%;
+  .search-bar-inner {
+    display: flex;
+    margin: auto;
+    width: 500px;
   }
-  img.logo {
-    width:400px;
+
+  @media screen and (max-width: 992px) {
+    .search-bar-inner {
+      padding: 0px var( --spacing-size-base);
+      width: 100%;
+    }
   }
 }

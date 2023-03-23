@@ -1,0 +1,6 @@
+.input-component {
+    padding: var(--spacing-size-sm);
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    width: 100%;
+}
