@@ -24,7 +24,7 @@ class {
     };
 
     const data = await fetchAndReturn(createFinalURL());
-    this.state.data = data.data;
+    if (data?.data) this.state.data = data.data;
   }
 
   inputChange(obj) {
