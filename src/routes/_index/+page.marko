@@ -1,7 +1,7 @@
 import fetchAndReturn from "../../utils/fetchAndReturn";
 // https://developers.giphy.com/dashboard/ -> "Create an App" -> add in API key.
 
-static const APIKEY = "API_HERE";
+static const APIKEY = "ZLTUjA6BTPOqrjrRKkVYY6EXMgISzYVy";
 class {
   onCreate() {
     this.state = {
@@ -31,6 +31,7 @@ class {
   };
 
   async buttonClick() {
+    window.scrollTo(0, 0);
     const data = await fetchAndReturn(this.createFinalURL(this.state.inputVal));
     if (data?.data) this.state.data = data.data;
   }

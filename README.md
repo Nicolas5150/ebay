@@ -24,7 +24,7 @@ This project is powered by [@marko/run](https://github.com/marko-js/run).
 * A user can begin typing into the search box to find new results to then replace what is seen on the page.
 * The user will be provided 10 images to start and provided additional items as they get closer to the bottom - using the api we can just fetch sections of the data and append it back to the running list so that we only fetch what we need in moderation. 
 * Each card has a title, a gif, and (up to) two additional actions.
-* When the card is clicked (or tabbed and entered) the card will scale up in size above the rest of the cards.
+* When the card is clicked (or tabbed and entered) the card will be scrolled into view and scaled up in size above the rest of the cards.
 * If the user clicks on the Copy field the gif url will be copied to the clipboard and the text will momentarily change to say "copied".
 * If the user has the source action, clicking on it will open a new tab to where the gif originated from. 
 * If no results are found then a alternative view is shown with a notification and a gif to go along with it. 
