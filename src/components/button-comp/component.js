@@ -1,12 +1,8 @@
 export default class {
-    onCreate() {
+    onCreate(input) {
         this.state = {
-            text: null,
+            text: input?.text ?? 'Button',
         };
-    }
-    onMount() {
-        const { text } = this.input;
-        this.state.text = text;
     }
     // https://markojs.com/docs/events/#emitting-custom-events
     clickHandler(event) {

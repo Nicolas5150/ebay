@@ -43,16 +43,39 @@
     margin: auto;
     max-width: 300px;
     min-width: 250px;
+    overflow: scroll;
     width: 75%;
 }
 
-.list-comp .source {
+.actions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.list-comp .source,
+.list-comp .copy {
     color: var(--color-magenta-base);
     font-size: var(--font-size-sm);
-    margin-left: auto;
     text-decoration: none;
 }
 
-.list-comp .source:hover {
+.list-comp .source:hover,
+.list-comp .copy:hover {
     color: var(--color-magenta-dark);
+}
+
+.no-items {
+    display: flex;
+    flex-direction: column;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    justify-content: center;
+    margin: 75px 0 20px 0;
+    text-align: center;
+}
+
+.no-items img {
+    margin: auto;
+    max-width: 600px;
 }

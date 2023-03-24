@@ -1,48 +1,68 @@
 import fetchAndReturn from "../../utils/fetchAndReturn";
-
 // https://developers.giphy.com/dashboard/ -> "Create an App" -> add in API key.
-static const APIKEY = "_Enter API here_";
 
+static const APIKEY = "API_HERE";
 class {
   onCreate() {
     this.state = {
       inputVal: "",
+      hasTypedBefore: false,
       giphyURL: "https://api.giphy.com/v1/gifs/search",
       data: false,
     };
   }
 
-  async buttonClick(event) {
-    const createFinalURL = () => {
-      const finalUrl = new URL(this.state.giphyURL);
-      finalUrl.searchParams.set("api_key", APIKEY);
-      finalUrl.searchParams.set("q", this.state.inputVal);
-      finalUrl.searchParams.set("limit", "10");
-      finalUrl.searchParams.set("rating", "g");
-      finalUrl.searchParams.set("lang", "en");
-      return finalUrl;
-    };
+  async onMount() {
+    const data = await fetchAndReturn(this.createFinalURL());
+    if (data?.data) this.state.data = data.data;
+  }
 
-    const data = await fetchAndReturn(createFinalURL());
+  createFinalURL = (inputVal = "Nyan Cat", offset = 0) => {
+    const finalUrl = new URL(this.state.giphyURL);
+    finalUrl.searchParams.set("api_key", APIKEY);
+    finalUrl.searchParams.set("q", inputVal);
+    finalUrl.searchParams.set("limit", "10");
+    finalUrl.searchParams.set("rating", "g");
+    finalUrl.searchParams.set("lang", "en");
+    if (offset > 0) {
+      finalUrl.searchParams.set("offset", offset.toString());
+    }
+    return finalUrl;
+  };
+
+  async buttonClick() {
+    const data = await fetchAndReturn(this.createFinalURL(this.state.inputVal));
     if (data?.data) this.state.data = data.data;
   }
 
   inputChange(obj) {
     this.state.inputVal = obj.value;
+    if (!this.state.hasTypedBefore) this.state.hasTypedBefore = true;
+  }
+
+  async handleInfiniteScroll(value) {
+    const inputval =
+      this.state.inputVal !== "" ? this.state.inputVal : undefined;
+    const data = await fetchAndReturn(
+      this.createFinalURL(inputval, value.offset)
+    );
+
+    if (data?.data) this.state.data = [...this.state.data, ...data.data];
   }
 }
-<div.search-bar-outer>
-  <div.search-bar-inner>
+
+<div class="search-bar-outer">
+  <div class="search-bar-inner">
     <input-comp
-        type="search"
-        id="giphy-searchbar"
-        hidden=true
-        labelText="Giphy search"
-        placeholder="Search"
-        value=state.inputVal
-        on-input-change("inputChange")
-      />
-      <button-comp text="search" on-button-click("buttonClick")/>
+      type="search"
+      id="giphy-searchbar"
+      hidden
+      labelText="Giphy search"
+      placeholder=state.hasTypedBefore ? "Search for on Giphy" : "Searching for Nyan Cat"
+      value=state.inputVal
+      on-input-change("inputChange")
+    />
+    <button-comp text="Search" on-button-click("buttonClick")/>
   </div>
 </div>
 
@@ -50,18 +70,21 @@ class {
   <div>Error with search</div>
 </if>
 <else-if(state.data)>
-  <list-comp data=state.data/>
+  <list-comp
+    data=state.data
+    infiniteScroll
+    on-infinite-scroll-reached("handleInfiniteScroll")
+  />
 </else-if>
-
 style {
   .search-bar-outer {
     background: white;
     box-shadow: 1px 1px 3px var(--color-gray-med);
     display: flex;
     flex-grow: 1;
-    padding: var( --spacing-size-base) 0px;
+    padding: var(--spacing-size-base) 0px;
     position: sticky;
-    transition: width .5s linear;
+    transition: width 0.5s linear;
     top: 0;
     width: 100%;
     z-index: 3;
@@ -75,7 +98,7 @@ style {
 
   @media screen and (max-width: 992px) {
     .search-bar-inner {
-      padding: 0px var( --spacing-size-base);
+      padding: 0px var(--spacing-size-base);
       width: 100%;
     }
   }

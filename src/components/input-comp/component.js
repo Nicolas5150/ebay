@@ -1,20 +1,20 @@
 export default class {
-    onCreate() {
+    onCreate(input) {
         this.state = {
-            type: "text",
-            hidden: false,
-            labelText: "",
+            type: input?.type?? "text",
+            hidden: input.hidden?? false,
+            labelText:  input.labelText?? "label",
             id: null,
-            placeholder: "",
-            value: ""
+            placeholder: input.placeholder?? "",
+            value: input.value?? "",
         };
     }
-    onMount() {
-        this.state = Object.assign(this.state, this.input)
-    }
+    
     onUpdate() {
         this.state.value = this.input.value;
+        this.state.placeholder = this.input.placeholder;
     }
+
     // https://markojs.com/docs/events/#emitting-custom-events
     inputHandler(event) {
         event.preventDefault();

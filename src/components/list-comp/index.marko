@@ -2,13 +2,23 @@
     <ul.list-comp  on-click("setActivePos", null)>
         <for|item, index| of=state.data>
             <li 
-            tabindex=0 
-            class=state.activePos === index ? 'active' : null 
-            key="items[]" 
-            on-click("setActivePos", index) 
-            on-keypress("setActivePos", index)>
+                id=index === state.data.length -1 ? 'last-list-item' : null
+                tabindex=0 
+                class=state.activePos === index ? 'active' : null 
+                key="items[]" 
+                on-click("setActivePos", index) 
+                on-keypress("setActivePos", index)
+            >
                 <div.title>${item.title}</div>
                 <img src=item.images.downsized_medium.url>
+                <div.actions>
+                <div.copy 
+                    tabindex=0
+                    on-click("copyToClipBoard", item.images.downsized_medium.url) 
+                    on-keypress("copyToClipBoard", item.images.downsized_medium.url)
+                >
+                    Copy
+                </div>
                 <if(item.source)>
                     <a.source 
                         href=item.source 
@@ -18,10 +28,14 @@
                         Source
                     </a>
                 </if>
+                </div>
             </li>
         </for>
     </ul>
 </if>
 <else>
-    <div>No items were found</div>
+    <div.no-items>
+        <div.no-items>No items were found</div>
+        <img src="https://media.giphy.com/media/6uGhT1O4sxpi8/giphy.gif">
+    </div>
 </else>
