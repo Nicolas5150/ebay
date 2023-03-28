@@ -8,7 +8,7 @@ export default class {
     clickHandler(event) {
         event.preventDefault();
         if (event.type === "click" || event.key === "Enter") {
-            this.emit("button-click", { clicked: true });
+            this.emit("button-click", { clicked: true, event: event });
         }
     }
 }

@@ -8,7 +8,7 @@
 
 .list-comp li {
     align-items: center;
-    background: var(--color-gray-base);
+    background: var(--color-white);
     border-radius: var(--radius-base);
     box-shadow: 2px 3px 5px var(--color-gray-med);
     display: flex;
@@ -49,19 +49,19 @@
 
 .actions {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     width: 100%;
 }
 
-.list-comp .source,
-.list-comp .copy {
+.list-comp .source {
     color: var(--color-magenta-base);
     font-size: var(--font-size-sm);
+    margin: var(--spacing-size-sm) 0 0 auto;
     text-decoration: none;
 }
 
-.list-comp .source:hover,
-.list-comp .copy:hover {
+.list-comp .source:hover { 
     color: var(--color-magenta-dark);
 }
 

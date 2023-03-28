@@ -53,21 +53,20 @@ export default class {
         }
     }
 
-    copyToClipBoard(url, event) {
-        if (event.type === "click" || event.key === "Enter") {
-            event.stopPropagation();
-            navigator.clipboard.writeText(url);
+    copyToClipBoard(url, emit) {
+        emit.event.stopPropagation();
+        navigator.clipboard.writeText(url);
 
-            event.target.innerText = 'Copied';
-            setTimeout(() => {
-                event.target.innerText = "Copy"
-            }, 1000);
-        }
+        emit.event.target.innerText = 'Copied';
+        setTimeout(() => {
+            emit.event.target.innerText = "Copy source"
+        }, 1000);
     }
 
     newTab(url, event) {
         if (event.type === "click" || event.key === "Enter") {
             event.stopPropagation();
+            event.preventDefault();
             window.open(url, '_blank');
         }
     }

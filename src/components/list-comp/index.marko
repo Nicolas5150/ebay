@@ -12,20 +12,18 @@
                 <div.title>${item.title}</div>
                 <img src=item.images.downsized_medium.url>
                 <div.actions>
-                <div.copy 
-                    tabindex=0
-                    on-click("copyToClipBoard", item.images.downsized_medium.url) 
-                    on-keypress("copyToClipBoard", item.images.downsized_medium.url)
-                >
-                    Copy
-                </div>
+                <button-comp 
+                    text="Copy source" 
+                    on-button-click("copyToClipBoard", item.images.downsized_medium.url)
+                />
                 <if(item.source)>
                     <a.source 
                         href=item.source 
                         target="_blank" 
+                        tabindex=0
                         on-click("newTab", item.source) 
                         on-keypress("newTab", item.source)>
-                        Source
+                        Inital reference
                     </a>
                 </if>
                 </div>
